@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import RestaurantCard from './RestaurantCard';
 import { swiggy_api_URL } from '../utils/constant';
-import { restaurantList } from '../utils/constant';
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+
 
 const Body = () => {
   const [listOfRestaurant, setListOfRestaurant,] = useState([]);
