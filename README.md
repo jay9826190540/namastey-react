@@ -11,3 +11,7 @@
 # componentDidMount - The componentDidMount() method allows us to execute the React code when the component is already placed in the DOM (Document Object Model).
 
 # ComponentDidMount is used for making api call
+
+# Single responsibility principle - Code becomes reusable, maintainable, testable
+
+# Hook is just utility function

@@ -4,7 +4,6 @@ const styleCard = {
   backgroundColor: "#F0F0F0"
 }
 const RestaurantCard = ({ resData }) => {
-  console.log(resData);
   const { name, cuisines, avgRating, deliveryTime, cloudinaryImageId, costForTwo } = resData.info;
 
   return (

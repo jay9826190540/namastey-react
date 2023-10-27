@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const User = ({ name }) => {
   const [count, setCount] = useState({ test: 0 });
   const [countNew, setCountNew] = useState(1);
+  useEffect(() => {
+    //console.log("use effect --1");
+    const timer = setInterval(() => {
+      //console.log("Inside set interval functional component");
+    }, 1000)
+    //// This function is called when we are unmouting component
+    return () => {
+      //console.log("inside clear interval")
+      clearInterval(timer)
+    };
+  }, [])
+  useEffect(() => {
+    //console.log("Use effect 2 ------");
+  }, [])
+  useEffect(() => {
+    //console.log("Use effect 3 ------");
+  }, [])
   const hanldeIncrementCounter = () => {
     setCount({ test: count.test + 1 });
   }
