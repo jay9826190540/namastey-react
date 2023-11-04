@@ -15,3 +15,19 @@
 # Single responsibility principle - Code becomes reusable, maintainable, testable
 
 # Hook is just utility function
+
+# Learn about styled component
+
+# SASS
+# Bootstrap
+# Chakra UI
+# Tailwind
+# Ant Design
+# Material UI
+# Tail wind is very light weighted .
+# Higher order is a function that takes in component and returns in new component
+
+# What are Pure Component ?
+# --------------------------------------
+# Pure Components in React are the components which do not re-renders when the value of state and props has been updated with the same values. If the value of the previous state or props and the new state or props is the same, the component is not re-rendered.
+

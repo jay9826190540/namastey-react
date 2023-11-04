@@ -2,34 +2,39 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantDetails = () => {
 
   const { resId } = useParams();
-
   const resInfo = useRestaurantMenu(resId);
   const onlineStatus = useOnlineStatus();
-  console.log('online status is' + onlineStatus);
+
   if (resInfo == null) return <Shimmer />
   const { name, cuisines, costForTwoMessage } = resInfo?.data?.cards[0]?.card?.card?.info;
-  const { itemCards } = resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
-  // console.log(itemCards);
+  const { itemCards } = resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+
+  //console.log(resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards);
+
+  const categories = resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter((res) => {
+    return res?.card?.card?.["@type"] == "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  })
+
+  console.log(categories);
+
   return (
     <>
-      <div className="menu">
-        <h1>{name}</h1>
-        <h3>{cuisines.join(',')}</h3>
-        <h3>{costForTwoMessage}</h3>
-        <h2>Menu ---</h2>
-        <ul>
-          {itemCards.map((item) => {
-            return (
-              <li key={item.card.info.name}>{item.card.info.name} {" "}
-                Rs {item.card.info.price / 100 || item.card.info.defaultPrice / 100}</li>
-            )
-          })}
-        </ul>
-      </div>
+      <div className="menu pl-10 pt-5 text-center">
+        <h1 className="font-bold my-5 text-2xl">{name}</h1>
+        <h3 className="text-gray-400 font-semibold text-lg">{cuisines.join(', ')} - {costForTwoMessage}</h3>
+
+        {categories.map((category) => {
+          return (
+            <RestaurantCategory category={category}></RestaurantCategory>
+          )
+        })}
+
+      </div >
     </>
   )
 }

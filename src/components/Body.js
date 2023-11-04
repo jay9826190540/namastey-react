@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard, { withPromotedLabel } from './RestaurantCard';
 import { swiggy_api_URL } from '../utils/constant';
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -10,7 +10,8 @@ const Body = () => {
   const [listOfRestaurant, setListOfRestaurant,] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState('');
-
+  console.log('listOfRestaurant', listOfRestaurant);
+  const RestaurantWithPromotedLabel = withPromotedLabel(RestaurantCard);
   useEffect(() => {
     //console.log("useEffect called");
     fetchData()
@@ -45,21 +46,23 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
   if (!onlineStatus) return <h1>You are offline please check internet connection</h1>
   return filteredRestaurant.length === 0 ? (<Shimmer />) : (<div className="body">
-    <div className="filter-search">
-      <input type="text" className="input-search" value={searchText} onChange={handleChangeInput}></input>
-      <button className="filter-button" onClick={handleSearchClick}>
+    <div className="flex m-4">
+      <input type="text" className="border border-solid border-gray-500" value={searchText} onChange={handleChangeInput}></input>
+      <button className="px-4 py-2 bg-green-100 mx-4 rounded-lg" onClick={handleSearchClick}>
         Search
       </button>
-      <button className="filter-button" onClick={hanldeClickRestaurant}>
+      <button className="px-4 py-2 bg-gray-100 mx-4 rounded-lg" onClick={hanldeClickRestaurant}>
         Top Rated Restaurant
       </button>
     </div>
-    <div className="res-container">
+    <div className="flex flex-wrap">
       {filteredRestaurant.map((restaurant) => {
         return (
           <Link to={"/restaurants/" + restaurant.info.id} key={restaurant.info.id}>
-            <RestaurantCard resData={restaurant}  >
-            </RestaurantCard>
+            {restaurant.info.isOpen ? (<RestaurantWithPromotedLabel resData={restaurant} />) :
+              (<RestaurantCard resData={restaurant}  >
+              </RestaurantCard>)}
+
           </Link>
         )
       })}
